@@ -46,6 +46,6 @@ public interface PlanService {
 	
 	//active or de-active a plan
 	
-	public boolean checkPlanStatus(Integer planId ,String status);
+	public boolean planStatusChange(Integer planId ,String status);
 
 }

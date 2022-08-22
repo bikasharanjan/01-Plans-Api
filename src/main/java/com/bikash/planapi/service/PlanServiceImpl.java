@@ -15,8 +15,6 @@ import com.bikash.planapi.repo.PlanRepo;
 
 @Service
 public class PlanServiceImpl implements PlanService {
-	
-	private static final Object Plans = null;
 
 	@Autowired
 	private PlanRepo planRepo;
@@ -27,7 +25,7 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public Map<Integer, String> getPlanCategories() {
-		List<PlanCategory> findAll = planCategoryRepo.findAll();
+		List<PlanCategory> findAll =  planCategoryRepo.findAll();
 		Map<Integer, String> categoryMap=new HashMap<>();
 		findAll.forEach(category -> {
 			categoryMap.put(category.getCategoryId(), category.getCategoryName());
@@ -38,7 +36,7 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public boolean savePlan(Plans plans) {
-		com.bikash.planapi.entity.Plans saved = planRepo.save(plans);
+		Plans saved = planRepo.save(plans);
 		/*if(saved.getPlanId()!=null)
 			return true;
 		else
@@ -84,7 +82,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public boolean checkPlanStatus(Integer planId, String status) {
+	public boolean planStatusChange(Integer planId, String status) {
 		Optional<Plans> findById=planRepo.findById(planId);
 		if(findById.isPresent()) {
 		Plans plans=findById.get();
