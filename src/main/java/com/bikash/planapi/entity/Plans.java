@@ -2,10 +2,7 @@ package com.bikash.planapi.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,6 +15,7 @@ import lombok.Data;
 public class Plans {
 	
 	@Id
+	@GeneratedValue
 	@Column(name = "PLAN_ID")
 	private Integer planId;
 	

@@ -16,81 +16,79 @@ import com.bikash.planapi.repo.PlanRepo;
 @Service
 public class PlanServiceImpl implements PlanService {
 
-	@Autowired
-	private PlanRepo planRepo;
-	
-	@Autowired
-	private PlanCategoryRepo planCategoryRepo;
+    @Autowired
+    private PlanRepo planRepo;
+
+    @Autowired
+    private PlanCategoryRepo planCategoryRepo;
 
 
-	@Override
-	public Map<Integer, String> getPlanCategories() {
-		List<PlanCategory> findAll =  planCategoryRepo.findAll();
-		Map<Integer, String> categoryMap=new HashMap<>();
-		findAll.forEach(category -> {
-			categoryMap.put(category.getCategoryId(), category.getCategoryName());
-		});
-		System.out.println(categoryMap);
-		return categoryMap;
-	}
+    @Override
+    public Map<Integer, String> getPlanCategories() {
+        List<PlanCategory> findAll = planCategoryRepo.findAll();
+        Map<Integer, String> categoryMap = new HashMap<>();
+        findAll.forEach(category -> {
+            categoryMap.put(category.getCategoryId(), category.getCategoryName());
+        });
+        System.out.println(categoryMap);
+        return categoryMap;
+    }
 
-	@Override
-	public boolean savePlan(Plans plans) {
-		Plans saved = planRepo.save(plans);
+    @Override
+    public boolean savePlan(Plans plans) {
+        Plans saved = planRepo.save(plans);
 		/*if(saved.getPlanId()!=null)
 			return true;
 		else
 			return false; */
-		
-		//return saved.getPlanId()!=null?true:false;
-		
-		return saved.getPlanId()!=null;
-	}
 
-	@Override
-	public List<Plans> getAllPlans() {
-		return planRepo.findAll();
-	}
+        //return saved.getPlanId()!=null?true:false;
 
-	@Override
-	public Plans getPlanById(Integer planId) {
-		Optional<Plans> findById = planRepo.findById(planId);
-		if(findById.isPresent())
-			return findById.get();
-		else
-			return null;
-	}
+        return saved.getPlanId() != null;
+    }
 
-	@Override
-	public boolean updatePlan(Plans plans) {
-		Plans saved = planRepo.save(plans);
-		return plans.getPlanId()!=null;
-	}
+    @Override
+    public List<Plans> getAllPlans() {
+        return planRepo.findAll();
+    }
 
-	@Override
-	public boolean deletePlanById(Integer planId) {
-		boolean status=false;
-		try{
-			planRepo.deleteById(planId);
-			status=true;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		return status;
-	}
+    @Override
+    public Plans getPlanById(Integer planId) {
+        Optional<Plans> findById = planRepo.findById(planId);
+        if (findById.isPresent())
+            return findById.get();
+        else
+            return null;
+    }
 
-	@Override
-	public boolean planStatusChange(Integer planId, String status) {
-		Optional<Plans> findById=planRepo.findById(planId);
-		if(findById.isPresent()) {
-		Plans plans=findById.get();
-		plans.setActiveSw(status);
-		planRepo.save(plans);
-		return true;
-		}
-		else
-			return false;
-	}
+    @Override
+    public boolean updatePlan(Plans plans) {
+        Plans saved = planRepo.save(plans);
+        return plans.getPlanId() != null;
+    }
+
+    @Override
+    public boolean deletePlanById(Integer planId) {
+        boolean status = false;
+        try {
+            planRepo.deleteById(planId);
+            status = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return status;
+    }
+
+    @Override
+    public boolean planStatusChange(Integer planId, String status) {
+        Optional<Plans> findById = planRepo.findById(planId);
+        if (findById.isPresent()) {
+            Plans plans = findById.get();
+            plans.setActiveSw(status);
+            planRepo.save(plans);
+            return true;
+        } else
+            return false;
+    }
 }
